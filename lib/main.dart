@@ -1,4 +1,10 @@
+
 import 'package:flutter/material.dart';
+
+import 'MoviesWidget.dart';
+import 'MyWidget.dart';
+import 'hot/HotWidget.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -24,7 +30,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
-  final pages = [Text("热映"),Text("找片"),Text("我的")];
+  final pages = [HotWidget(), MoviesWidget(), MyWidget()];
 
   void onNavigationSel(int index) {
     setState(() {
@@ -35,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: pages.elementAt(_selectedIndex),),
+      body: pages.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), title: Text("热映")),
