@@ -19,7 +19,7 @@ class HotMovieItemState extends State<HotMovieItemWeiget> {
       padding: EdgeInsets.all(20),
       child: Row(
         children: <Widget>[
-          Image.network(widget.bean.images,
+          Image.network(widget.bean.images.small,
               width: 80, height: 120, fit: BoxFit.cover),
           Expanded(
             child: Padding(
@@ -29,14 +29,17 @@ class HotMovieItemState extends State<HotMovieItemWeiget> {
                 children: <Widget>[
                   Text(
                     widget.bean.title,
+                    maxLines: 2,
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   ),
-                  Text(widget.bean.rating.toString(),
+                  Text(widget.bean.rating.average.toString(),
                       style: TextStyle(fontSize: 14, color: Colors.black54)),
-                  Text('导演 ' + widget.bean.directors,
+                  Text('导演：' + getCastsName(widget.bean.directors),
+                      maxLines: 2,
                       style: TextStyle(fontSize: 14, color: Colors.black54)),
                   Text(
-                    '主演 ' + widget.bean.casts,
+                    '主演：' + getCastsName(widget.bean.casts),
+                    maxLines: 2,
                     style: TextStyle(fontSize: 14, color: Colors.black54),
                   )
                 ],
@@ -48,7 +51,7 @@ class HotMovieItemState extends State<HotMovieItemWeiget> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(widget.bean.watchedPeople.toString() + "人看过",
+                Text(widget.bean.collectCount.toString() + "人看过",
                     style: TextStyle(color: Colors.red)),
                 Padding(
                   padding: EdgeInsets.only(left: 18, right: 18),
@@ -67,5 +70,12 @@ class HotMovieItemState extends State<HotMovieItemWeiget> {
         ],
       ),
     );
+  }
+
+  String getCastsName(List<Cast> casts) {
+    String castName = "";
+    casts.forEach((cast) => castName += cast.name + "/");
+
+    return castName.substring(0, castName.length - 1);
   }
 }
