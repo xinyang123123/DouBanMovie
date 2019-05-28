@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_doubanmovie/hot/HotMovieListWidget.dart';
 
-class HotWidget extends StatefulWidget {
+import '../Routes.dart';
+
+class HotMovieWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return HotWidgetState();
+    return HotMovieWidgetState();
   }
 }
 
-class HotWidgetState extends State<HotWidget> {
+class HotMovieWidgetState extends State<HotMovieWidget> {
+  String currentCity = "西安";
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -19,7 +23,10 @@ class HotWidgetState extends State<HotWidget> {
           padding: EdgeInsets.only(left: 20, right: 20),
           child: Row(
             children: <Widget>[
-              Text("西安"),
+              GestureDetector(
+                child: Text(currentCity,style: TextStyle(fontSize: 16),),
+                onTap: () => Navigator.pushNamed(context, Routes.CITYS,arguments: currentCity),
+              ),
               Icon(Icons.arrow_drop_down),
               Expanded(
                 flex: 1,
@@ -56,7 +63,7 @@ class HotWidgetState extends State<HotWidget> {
                     flex: 1,
                     child: TabBarView(
                       children: <Widget>[
-                        HotMovieListWidget(),
+                        HotMovieListWidget(currentCity),
                         Center(child: Text("即将上映"))
                       ],
                     ),

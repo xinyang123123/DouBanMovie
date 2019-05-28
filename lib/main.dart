@@ -1,10 +1,10 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_doubanmovie/hot/CitysWidget.dart';
 
 import 'MoviesWidget.dart';
 import 'MyWidget.dart';
-import 'hot/HotWidget.dart';
-
+import 'Routes.dart';
+import 'hot/HotMovieWidget.dart';
 
 void main() => runApp(MyApp());
 
@@ -18,6 +18,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(),
+      routes: {
+        Routes.CITYS: (context) => CitysWidget(),
+      },
     );
   }
 }
@@ -30,7 +33,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
-  final pages = [HotWidget(), MoviesWidget(), MyWidget()];
+  final pages = [HotMovieWidget(), MoviesWidget(), MyWidget()];
 
   void onNavigationSel(int index) {
     setState(() {

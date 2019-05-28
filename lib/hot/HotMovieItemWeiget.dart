@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_doubanmovie/bean/HotMovieBean.dart';
+import 'package:flutter_doubanmovie/utils/ConversionUtils.dart';
 
 class HotMovieItemWeiget extends StatefulWidget {
   final HotMovieBean bean;
@@ -30,17 +31,17 @@ class HotMovieItemState extends State<HotMovieItemWeiget> {
                   Text(
                     widget.bean.title,
                     maxLines: 2,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                   Text(widget.bean.rating.average.toString(),
-                      style: TextStyle(fontSize: 14, color: Colors.black54)),
+                      style: TextStyle(fontSize: 12, color: Colors.black54)),
                   Text('导演：' + getCastsName(widget.bean.directors),
                       maxLines: 2,
-                      style: TextStyle(fontSize: 14, color: Colors.black54)),
+                      style: TextStyle(fontSize: 12, color: Colors.black54)),
                   Text(
                     '主演：' + getCastsName(widget.bean.casts),
                     maxLines: 2,
-                    style: TextStyle(fontSize: 14, color: Colors.black54),
+                    style: TextStyle(fontSize: 12, color: Colors.black54),
                   )
                 ],
               ),
@@ -51,12 +52,14 @@ class HotMovieItemState extends State<HotMovieItemWeiget> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(widget.bean.collectCount.toString() + "人看过",
-                    style: TextStyle(color: Colors.red)),
+                Text(
+                    ConversionUtils.AddUnitToNum(widget.bean.collectCount) +
+                        "人看过",
+                    style: TextStyle(fontSize: 12, color: Colors.red)),
                 Padding(
                   padding: EdgeInsets.only(left: 18, right: 18),
                   child: OutlineButton(
-                    child: Text("购票", style: TextStyle(color: Colors.red)),
+                    child: Text("购票", style: TextStyle(fontSize: 12, color: Colors.red)),
                     color: Colors.red,
                     textColor: Colors.red,
                     highlightedBorderColor: Colors.red,
