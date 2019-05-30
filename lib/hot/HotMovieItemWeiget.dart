@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_doubanmovie/bean/HotMovieBean.dart';
 import 'package:flutter_doubanmovie/utils/ConversionUtils.dart';
 
@@ -53,7 +54,7 @@ class HotMovieItemState extends State<HotMovieItemWeiget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                    ConversionUtils.AddUnitToNum(widget.bean.collectCount) +
+                    ConversionUtils.addUnitToNum(widget.bean.collectCount) +
                         "人看过",
                     style: TextStyle(fontSize: 12, color: Colors.red)),
                 Padding(
@@ -64,7 +65,7 @@ class HotMovieItemState extends State<HotMovieItemWeiget> {
                     textColor: Colors.red,
                     highlightedBorderColor: Colors.red,
                     borderSide: BorderSide(color: Colors.red),
-                    onPressed: () {},
+                    onPressed: () {buyTicket();},
                   ),
                 )
               ],
@@ -73,6 +74,11 @@ class HotMovieItemState extends State<HotMovieItemWeiget> {
         ],
       ),
     );
+  }
+
+  Future buyTicket() async {
+   String result =  await MethodChannel('douBan.movie').invokeMethod('buyTicket',widget.bean.title);
+   print(result);
   }
 
   String getCastsName(List<Cast> casts) {

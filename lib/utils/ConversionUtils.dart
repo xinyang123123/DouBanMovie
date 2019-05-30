@@ -1,6 +1,6 @@
 class ConversionUtils {
 
-  static String AddUnitToNum(int num) {
+  static String addUnitToNum(int num) {
     String result;
 
     if (num > 8000) {

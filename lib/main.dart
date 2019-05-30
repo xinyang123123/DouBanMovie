@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_doubanmovie/hot/CitysWidget.dart';
 
 import 'MoviesWidget.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       ),
       home: MyHomePage(),
       routes: {
-        Routes.CITYS: (context) => CitysWidget(),
+        Routes.CITY: (context) => CitysWidget(),
       },
     );
   }
@@ -35,10 +36,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final pages = [HotMovieWidget(), MoviesWidget(), MyWidget()];
 
-  void onNavigationSel(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  static const platfromChannel = const MethodChannel("douBan.movie");
+
+  @override
+  void initState() {
+    super.initState();
+    initPlatfromChannel();
   }
 
   @override
@@ -56,5 +59,28 @@ class _MyHomePageState extends State<MyHomePage> {
         type: BottomNavigationBarType.fixed,
       ),
     );
+  }
+
+  void onNavigationSel(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  void initPlatfromChannel() {
+    platfromChannel.setMethodCallHandler((methodCall) async {
+      switch (methodCall.method) {
+        case 'selIndex':
+          int index = methodCall.arguments['index'];
+          if (index != null && index >= 0) {
+            setState(() {
+             _selectedIndex = index; 
+            });
+            return 'sel succeed';
+          }
+          break;
+        default:
+      }
+    });
   }
 }

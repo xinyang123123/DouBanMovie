@@ -25,7 +25,7 @@ class HotMovieWidgetState extends State<HotMovieWidget> {
             children: <Widget>[
               GestureDetector(
                 child: Text(currentCity,style: TextStyle(fontSize: 16),),
-                onTap: () => Navigator.pushNamed(context, Routes.CITYS,arguments: currentCity),
+                onTap: () => Navigator.pushNamed(context, Routes.CITY,arguments: currentCity),
               ),
               Icon(Icons.arrow_drop_down),
               Expanded(
