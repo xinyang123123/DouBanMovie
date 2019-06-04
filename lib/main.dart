@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_doubanmovie/hot/CitysWidget.dart';
+import 'package:flutter_doubanmovie/bloc/CityBloc.dart';
+import 'package:flutter_doubanmovie/ui/hot/CitysWidget.dart';
+import 'package:flutter_doubanmovie/ui/hot/HotMovieWidget.dart';
+import 'package:flutter_doubanmovie/ui/mine/MyWidget.dart';
+import 'package:flutter_doubanmovie/ui/movies/MoviesWidget.dart';
 
-import 'MoviesWidget.dart';
-import 'MyWidget.dart';
 import 'Routes.dart';
-import 'hot/HotMovieWidget.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() => runApp(MyApp());
 
@@ -39,15 +42,12 @@ class _MyHomePageState extends State<MyHomePage> {
   static const platfromChannel = const MethodChannel("douBan.movie");
 
   @override
-  void initState() {
-    super.initState();
-    initPlatfromChannel();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages.elementAt(_selectedIndex),
+      body: BlocProvider(
+        bloc: CityBloc(),
+        child: pages[_selectedIndex],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), title: Text("热映")),
@@ -64,23 +64,6 @@ class _MyHomePageState extends State<MyHomePage> {
   void onNavigationSel(int index) {
     setState(() {
       _selectedIndex = index;
-    });
-  }
-
-  void initPlatfromChannel() {
-    platfromChannel.setMethodCallHandler((methodCall) async {
-      switch (methodCall.method) {
-        case 'selIndex':
-          int index = methodCall.arguments['index'];
-          if (index != null && index >= 0) {
-            setState(() {
-             _selectedIndex = index; 
-            });
-            return 'sel succeed';
-          }
-          break;
-        default:
-      }
     });
   }
 }

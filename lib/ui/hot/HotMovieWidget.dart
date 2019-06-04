@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_doubanmovie/hot/HotMovieListWidget.dart';
 
-import '../Routes.dart';
+import '../../Routes.dart';
+import 'HotMovieListWidget.dart';
+
 
 class HotMovieWidget extends StatefulWidget {
   @override
@@ -11,7 +12,6 @@ class HotMovieWidget extends StatefulWidget {
 }
 
 class HotMovieWidgetState extends State<HotMovieWidget> {
-  String currentCity = "西安";
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class HotMovieWidgetState extends State<HotMovieWidget> {
           child: Row(
             children: <Widget>[
               GestureDetector(
-                child: Text(currentCity,style: TextStyle(fontSize: 16),),
+                child: Text(,style: TextStyle(fontSize: 16),),
                 onTap: () => Navigator.pushNamed(context, Routes.CITY,arguments: currentCity),
               ),
               Icon(Icons.arrow_drop_down),

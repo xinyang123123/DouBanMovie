@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_doubanmovie/bean/HotMovieBean.dart';
+import 'package:flutter_doubanmovie/data/bean/HotMovieBean.dart';
 import 'package:flutter_doubanmovie/utils/ConversionUtils.dart';
 
 class HotMovieItemWeiget extends StatefulWidget {

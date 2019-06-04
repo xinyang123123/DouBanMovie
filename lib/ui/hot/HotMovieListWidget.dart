@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_doubanmovie/bean/HotMovieBean.dart';
-import 'package:flutter_doubanmovie/hot/HotMovieItemWeiget.dart';
+import 'package:flutter_doubanmovie/data/bean/HotMovieBean.dart';
+
 import 'package:http/http.dart' as http;
+
+import 'HotMovieItemWeiget.dart';
 
 class HotMovieListWidget extends StatefulWidget {
   String currentCity;
@@ -61,9 +63,11 @@ class HotMovieListState extends State<HotMovieListWidget> {
         list.add(bean);
       }
 
-      setState(() {
-        datas = list;
-      });
+      if (mounted) {
+        setState(() {
+          datas = list;
+        });
+      }
     }
   }
 }
