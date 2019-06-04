@@ -34,6 +34,6 @@ class CityBloc extends Bloc<CityEvent, CityState> {
   Future initData() async {
     SharedPreferences sp = await SharedPreferences.getInstance();
     var selCity = sp.getString(Constants.SP_SEL_CITY);
-    dispatch(CityEvent(selCity));
+    dispatch(CityEvent(selCity ?? '西安'));
   }
 }

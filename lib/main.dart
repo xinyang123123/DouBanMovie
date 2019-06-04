@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_doubanmovie/bloc/CityBloc.dart';
-import 'package:flutter_doubanmovie/ui/hot/CitysWidget.dart';
+import 'package:flutter_doubanmovie/bloc/HotMoviesBloc.dart';
+import 'package:flutter_doubanmovie/ui/city/CitysWidget.dart';
 import 'package:flutter_doubanmovie/ui/hot/HotMovieWidget.dart';
 import 'package:flutter_doubanmovie/ui/mine/MyWidget.dart';
 import 'package:flutter_doubanmovie/ui/movies/MoviesWidget.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       ),
       home: MyHomePage(),
       routes: {
-        Routes.CITY: (context) => CitysWidget(),
+        Routes.CITY: (context) => CitiesWidget(),
       },
     );
   }
@@ -39,13 +40,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final pages = [HotMovieWidget(), MoviesWidget(), MyWidget()];
 
-  static const platfromChannel = const MethodChannel("douBan.movie");
+  static const platformChannel = const MethodChannel("douBan.movie");
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(
-        bloc: CityBloc(),
+      body: BlocProviderTree(
+        blocProviders: [
+          BlocProvider<CityBloc>(bloc: CityBloc()),
+          BlocProvider<HotMoviesBloc>(bloc: HotMoviesBloc())
+        ],
         child: pages[_selectedIndex],
       ),
       bottomNavigationBar: BottomNavigationBar(

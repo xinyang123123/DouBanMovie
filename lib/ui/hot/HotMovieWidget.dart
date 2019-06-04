@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_doubanmovie/bloc/CityBloc.dart';
+import 'package:flutter_doubanmovie/bloc/HotMoviesBloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../Constants.dart';
 import '../../Routes.dart';
 import 'HotMovieListWidget.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quiver/strings.dart' as strings;
 
 class HotMovieWidget extends StatefulWidget {
   @override
@@ -12,9 +16,23 @@ class HotMovieWidget extends StatefulWidget {
 }
 
 class HotMovieWidgetState extends State<HotMovieWidget> {
-
   @override
   Widget build(BuildContext context) {
+    var blocBuilder = BlocBuilder(
+        bloc: CityBloc(),
+        builder: (context, cityState) {
+          if (strings.isEmpty(cityState?.city)) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            BlocProvider.of<HotMoviesBloc>(context)
+                .dispatch(HotMoivesEvent(cityState.city));
+            return buildColumn(cityState, context);
+          }
+        });
+    return blocBuilder;
+  }
+
+  Column buildColumn(cityState, BuildContext context) {
     return Column(
       children: <Widget>[
         Container(
@@ -24,8 +42,11 @@ class HotMovieWidgetState extends State<HotMovieWidget> {
           child: Row(
             children: <Widget>[
               GestureDetector(
-                child: Text(,style: TextStyle(fontSize: 16),),
-                onTap: () => Navigator.pushNamed(context, Routes.CITY,arguments: currentCity),
+                child: Text(
+                  cityState.city,
+                  style: TextStyle(fontSize: 16),
+                ),
+                onTap: () => navigationToCity(),
               ),
               Icon(Icons.arrow_drop_down),
               Expanded(
@@ -63,7 +84,7 @@ class HotMovieWidgetState extends State<HotMovieWidget> {
                     flex: 1,
                     child: TabBarView(
                       children: <Widget>[
-                        HotMovieListWidget(currentCity),
+                        HotMovieListWidget(),
                         Center(child: Text("即将上映"))
                       ],
                     ),
@@ -73,5 +94,17 @@ class HotMovieWidgetState extends State<HotMovieWidget> {
         )
       ],
     );
+  }
+
+  void navigationToCity() async {
+    var selCity =
+        await Navigator.pushNamed(context, Routes.CITY, arguments: BlocProvider.of<CityBloc>(context).currentState.city);
+
+    if (selCity == null) return;
+
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString(Constants.SP_SEL_CITY, selCity); //存取数据
+
+    BlocProvider.of<CityBloc>(context).dispatch(CityEvent(selCity));
   }
 }
